@@ -1,0 +1,14 @@
+---
+- name: Create Redis volume
+  community.docker.docker_volume:
+    name: redis_data
+
+- name: Run Redis container
+  community.docker.docker_container:
+    name: redis_cache
+    image: redis:7-alpine
+    state: started
+    restart_policy: always
+    volumes:
+      - redis_data:/data
+    command: redis-server --save 60 1 --loglevel warning

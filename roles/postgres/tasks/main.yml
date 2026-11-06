@@ -1,0 +1,19 @@
+---
+- name: Create PostgreSQL volume
+  community.docker.docker_volume:
+    name: pg_data
+
+- name: Run PostgreSQL container
+  community.docker.docker_container:
+    name: postgres_db
+    image: postgres:15-alpine
+    state: started
+    restart_policy: always
+    ports:
+      - "5433:5432"
+    env:
+      POSTGRES_DB: monitoring_db
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: securepassword123
+    volumes:
+      - pg_data:/var/lib/postgresql/data

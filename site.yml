@@ -1,0 +1,18 @@
+---
+- hosts: all
+  gather_facts: yes
+  tasks:
+    - name: Ensure working environment is ready
+      ansible.builtin.debug:
+        msg: "Ansible initialized successfully for monitoring and resilience stand!"
+
+- hosts: db_servers
+  gather_facts: no
+  roles:
+    - postgres
+    - redis
+
+- hosts: monitoring_servers
+  gather_facts: no
+  roles:
+    - monitoring
